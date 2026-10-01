@@ -6,20 +6,23 @@
 /*   By: frgonzal <frgonzal@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 20:15:47 by frgonzal          #+#    #+#             */
-/*   Updated: 2026/10/01 20:14:47 by frgonzal         ###   ########.fr       */
+/*   Updated: 2026/10/01 21:54:37 by frgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
-static int ft_putsign(long *i)
+int ft_putsigned(long *i)
 {
+	int put;
+
+	put = 0;
 	if (*i < 0)
 	{
 		*i *= -1;
-		return (write(1, "-", 1));
+		put = (write(1, "-", 1));
 	}
-	return (0);
+	return (put + ft_putnbr((unsigned long)*i, "0123456789"));
 }
 
 int ft_strlen(char *s)
@@ -38,11 +41,6 @@ int ft_putnbr(unsigned long i, char *base)
 	unsigned long base_len;
 
 	leng = 0;
-	if (*base == '-')
-	{
-//		leng = ft_putsign(&i);
-		base++;
-	}
 	base_len = ft_strlen(base);
 	if(i >= base_len)
 		leng += ft_putnbr(i / base_len, base);
@@ -50,3 +48,12 @@ int ft_putnbr(unsigned long i, char *base)
 	return (1 + leng);
 }
 
+int main()
+{
+	long s;
+
+	s  = -200;
+	
+	printf(" :%i\n",ft_putsign(&s));
+	printf(" :%i",printf("%i", -200));
+}
