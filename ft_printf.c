@@ -6,7 +6,7 @@
 /*   By: frgonzal <frgonzal@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 21:34:14 by frgonzal          #+#    #+#             */
-/*   Updated: 2026/10/02 19:54:33 by frgonzal         ###   ########.fr       */
+/*   Updated: 2026/11/04 15:45:20 by frgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,32 @@ int	ft_check_conversion(char c, va_list args)
 		return (ft_putnbr(va_arg(args, unsigned int), "0123456789ABCDEF"));
 	else if (c == '%')
 		return (ft_putstr("%"));
-	return (0);
+	return (-1);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	int		leng;
-	int		i;
+	int		control;
 
 	va_start(args, format);
 	if (!format)
 		return (-1);
 	leng = 0;
-	i = 0;
-	while (format[i])
+	while (*format)
 	{
-		if (format[i] == '%')
+		if (*format == '%')
 		{
-			i++;
-			leng += ft_check_conversion(format[i], args);
+			control = ft_check_conversion(*(++format), args);
+			if (control == -1)
+				return (-1);
+			leng += control;
 		}
 		else
-			leng += ft_putchar(format[i]);
-		if (format[i])
-			i++;
+			leng += ft_putchar(*format);
+		if (*format)
+			format++;
 	}
 	va_end(args);
 	return (leng);
@@ -63,7 +64,7 @@ int	ft_printf(const char *format, ...)
 int	main(void)
 {
 	ft_printf("char: %c\n", 'A');
-	ft_printf("str: %s\n", "hola");
+	ft_printf("str: %q\n", "hola");
 	ft_printf("ptr: %p\n", (void *)0x1234);
 	ft_printf("int: %d %i\n", -42, 42);
 	ft_printf("uint: %u\n", 4294967295u);

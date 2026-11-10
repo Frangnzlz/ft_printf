@@ -6,7 +6,7 @@
 /*   By: frgonzal <frgonzal@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 20:15:47 by frgonzal          #+#    #+#             */
-/*   Updated: 2026/10/02 19:03:27 by frgonzal         ###   ########.fr       */
+/*   Updated: 2026/11/04 15:47:19 by frgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ int	ft_putnbr(unsigned long i, char *base)
 	base_len = ft_strlen(base);
 	if (i >= base_len)
 		leng += ft_putnbr(i / base_len, base);
-	write(1, &base[i % base_len], 1);
-	return (1 + leng);
+	return (write(1, &base[i % base_len], 1) + leng);
 }
