@@ -6,7 +6,7 @@
 /*   By: frgonzal <frgonzal@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 21:34:14 by frgonzal          #+#    #+#             */
-/*   Updated: 2026/11/04 15:45:20 by frgonzal         ###   ########.fr       */
+/*   Updated: 2026/11/10 16:36:42 by frgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,15 @@ int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	int		leng;
-	int		control;
 
-	va_start(args, format);
 	if (!format)
 		return (-1);
+	va_start(args, format);
 	leng = 0;
 	while (*format)
 	{
 		if (*format == '%')
-		{
-			control = ft_check_conversion(*(++format), args);
-			if (control == -1)
-				return (-1);
-			leng += control;
-		}
+			leng += ft_check_conversion(*(++format), args);
 		else
 			leng += ft_putchar(*format);
 		if (*format)
